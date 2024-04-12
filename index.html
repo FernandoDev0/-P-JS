@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplo de Formulário</title>
+  <style>
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 20px;
+    }
+    form {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+
+    input[type="number"], select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      background-color: #007bff;
+      color: #fff;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 8px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:hover {
+      background-color: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+
+    <form id="meuFormulario" >
+    <h2>𝐂𝐚𝐝𝐚𝐬𝐭𝐫𝐨 𝐞 𝐥𝐢𝐬𝐭𝐚𝐠𝐞𝐦 𝐝𝐞 P𝐫𝐨𝐝𝐮𝐭𝐨𝐬<h2>
+    <label for="nome">Nome do produto:</label>
+    <input type="text" id="nome" name="nome" required>
+
+    <label for="">Descrição do produto:</label>
+    <input type="text" id="descricao">
+
+    <label for="">Valor do produto</label>
+    <input type="number" id="valorProduto" required>
+    
+
+    <label for="venda">Disponível para venda:</label>
+    <select id="disponivel"  required>
+        <option value="">Selecione...</option>
+        <option value="sim">Sim</option>
+        <option value="nao">Nao</option>
+    </select>
+
+
+    <button >Enviar</button>
+    </form>
+
+    <table>
+        <caption>𝐋𝐢𝐬𝐭𝐚𝐠𝐞𝐦:</caption>
+        <thead>
+        <tr>
+        
+            <th>Nome</th>
+            <th>Valor</th>
+        </tr>
+        </thead>
+        <tbody id="listadados">
+        
+        </tbody>
+    </table>
+
+  <script>
+    
+let DadosListas = [];
+function app(){
+    let novoItem = pegarDados();
+    const nomeEncontrado = DadosListas.find(nome => nome.Nome === pegarDados().Nome);
+   
+    if(!nomeEncontrado){
+
+        DadosListas.push(novoItem);
+ 
+
+        DadosListas.sort((a,b) => a.Valor - b.Valor);
+    
+        
+    
+        let  listadados = document.getElementById("listadados");
+    
+        listadados.innerHTML = "";
+    
+        for (let i = 0; i < DadosListas.length; i++) {
+            let dados = DadosListas[i];
+    
+            let box = document.createElement("tr");
+            let nomeTR = document.createElement("td");
+            let valorTR = document.createElement("td");
+    
+            nomeTR.innerText = dados.Nome;
+            valorTR.innerText = dados.Valor;
+    
+            box.appendChild(nomeTR);
+            box.appendChild(valorTR);
+    
+            listadados.appendChild(box);
+    
+        }
+    
+        console.log(DadosListas);
+    
+    } else {
+        alert("Ja existe na lista")
+    }
+   
+}
+
+
+function pegarDados(){
+    let nome = document.getElementById("nome").value;
+    let descricao = document.getElementById("descricao").value;
+    let valorProduto = document.getElementById("valorProduto").value;
+    let Disponivel = document.getElementById("disponivel").value;
+
+    let cadastro = {
+        "Nome": nome,
+        "Valor" : Number(valorProduto),
+        "descricao" : descricao,
+        "Disponivel" : Disponivel
+    }
+
+    return cadastro;
+
+}
+
+
+
+document.getElementById("meuFormulario").addEventListener("submit", function(event) {
+    event.preventDefault();
+    app();
+
+    });
+
+
+  </script>
+
+</body>
+</html>
